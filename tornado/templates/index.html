@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var ws = new WebSocket("ws://localhost:8888/music-update/");
+            ws.onopen = function() {
+               console.log(evt.data);
+            };
+            ws.onmessage = function (evt) {
+               alert(evt.data);
+};
+        })
+    </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        {% for music in musics %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <span>{{ music.name }}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <form method="post" action="/delete-music/">
+                                            <input type="hidden" name="id" value="{{ music.id }}">
+                                            <input type="submit" class="btn btn-success" value="Delete">
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        {% end %}
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <form class="form" method="post" action="/">
+                          <div class="col-auto">
+{#                              <label for="music" class="visually-hidden">Password</label>#}
+                              <textarea name="input-text" class="form-control" id="music" placeholder="Input artist, track name, duration"></textarea>
+                          </div>
+                          <div class="col-auto">
+                              <button type="submit" class="btn btn-primary mb-3">Add music</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
