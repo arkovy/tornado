@@ -4,6 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+tornado = "*"
+"sqlalchemy.orm" = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
