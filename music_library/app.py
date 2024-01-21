@@ -1,7 +1,6 @@
 from tornado import web, websocket, ioloop
 from sqlalchemy.orm import sessionmaker
 
-
 from db import engine
 from models import Music
 
@@ -56,5 +55,5 @@ class MusicUpdate(websocket.WebSocketHandler):
 
     @classmethod
     def send_message(cls, message):
-       for client in cls.clients:
-           client.write_message(message)
+        for client in cls.clients:
+            client.write_message(message)

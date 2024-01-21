@@ -1,4 +1,5 @@
-from tornado import web
+from tornado import web, ioloop
+import argparse
 import asyncio
 
 from app import Index, Delete, MusicUpdate
@@ -13,17 +14,18 @@ def make_app():
 
 
 async def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=8000)
+    args = parser.parse_args()
+
     app = make_app()
+
     try:
-        app_listen = int(input('Введите номер порта, состоящий из 4 цыфр: '))
-        if len(str(app_listen)) == 4:
-            app.listen(int(app_listen))
-            print(f'Ваш порт: {app_listen}')
-        else:
-            print('Увы, вы ввели число больше или меньше указанного, повторите попытку')
+        app.listen(args.port)
+        print(f'Ваш порт: {args.port}')
+        await asyncio.Future()
     except ValueError:
-        print('Вы ввели не число!')
-    await asyncio.Event().wait()
+        print('Увы, вы ввели число больше или меньше указанного, повторите попытку')
 
 
 if __name__ == "__main__":
